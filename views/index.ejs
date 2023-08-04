@@ -10,12 +10,11 @@
 <body>
     <div class="container">
     <h1>URL Shrinker</h1>
-    <from action="" method="POST" class="my-4 form-inline d-flex align-items-center">
-        <label for="fullURL" class="visually-hidden"> Enter a URL to shorten </label>
-        <input class="form-control  mr-2" type="url" name="fullURL" id="fullURL" placeholder="Enter a URL to shorten">
-        <button type="submit" class="btn btn-success">Shorten</button>
-
-    </from>
+    <form action="/shortUrls" method="POST" class="my-4 form-inline">
+      <label for="fullUrl" class="visually-hidden">Url</label>
+      <input required placeholder="Url" type="url" name="fullUrl" id="fullUrl" class="form-control col mr-2">
+      <button class="my-3 btn btn-success" type="submit">Shrink</button>
+    </form>
 
     <table class="my-4 table table-striped table-responsive">
         <thead>
@@ -23,15 +22,24 @@
                 <th>Full URL</th>
                 <th>Short URL</th>
                 <th>Clicks</th>
+                <th>Delete</th>
             </tr>
         </thead>
         <tbody>
-            
-            <tr>
-                <td>https://www.google.com</td>
-                <td>abc123</td>
-                <td>0</td>
-            </tr>
+            <% shortUrls.forEach(shortUrl => { %>
+                <tr>
+                    <td> <a href="<%= shortUrl.full %>"><%= shortUrl.full %></td>
+                    <td>
+                        <a target="_blank" href="<%= shortUrl.short %>"><%= shortUrl.short %></a>
+                    </td>
+                    <td><%= shortUrl.clicks %></td>
+                    <td>
+                        <form action="/shortUrls/<%= shortUrl._id %>" method="POST">
+                            <button class="btn btn-danger">Delete</button>
+                        </form>
+                    
+                </tr>
+            <% }) %>
 
 
         </tbody>
